@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="template\{modName}\Main.cs" />
+    <Compile Remove="template\{modName}\**" />
   </ItemGroup>
 
 </Project>

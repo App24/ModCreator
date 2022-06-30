@@ -7,10 +7,10 @@ namespace ModCreator
     {
         public class Options
         {
-            [Option("name", Required =true, HelpText ="Name of the mod")]
+            [Option("name", Required = true, HelpText = "Name of the mod")]
             public string Name { get; set; }
 
-            [Option(shortName: 'f', longName:"force", Default =false, Required =false, HelpText ="Delete previous mod if it exists")]
+            [Option(shortName: 'f', longName: "force", Default = false, Required = false, HelpText = "Delete previous mod if it exists")]
             public bool Force { get; set; }
 
             [Usage()]
@@ -58,7 +58,7 @@ namespace ModCreator
             }
         }
 
-        static void RunOptions(Options options, Config config, GameConfig gameConfig)
+        private static void RunOptions(Options options, Config config, GameConfig gameConfig)
         {
             string modName = options.Name;
             if (modName == "template")
@@ -67,7 +67,7 @@ namespace ModCreator
                 return;
             }
             bool force = options.Force;
-            if(Directory.Exists(modName) && !force)
+            if (Directory.Exists(modName) && !force)
             {
                 Console.WriteLine("Mod already exists");
                 return;

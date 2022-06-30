@@ -34,6 +34,29 @@ namespace ModCreator
 
                 return text;
             }},
+            {"{csFiles}", (modInfo,_,_)=>
+            {
+                string text="";
+
+                List<string> allFiles=GetAllFiles(Path.Combine(modInfo.name, modInfo.name));
+
+                foreach(string file in allFiles)
+                {
+                    if (file.EndsWith(".cs"))
+                    {
+                        string fileName;
+                        {
+                            List<string> parts=file.Split(Path.DirectorySeparatorChar).ToList();
+                            parts.RemoveRange(0, 2);
+                            fileName=string.Join(Path.DirectorySeparatorChar, parts);
+                        }
+                        text+=$@"<Compile Include=""{fileName}"" />
+";
+                    }
+                }
+
+                return text;
+            } },
             {"{dependancies}", (modInfo, config, gameInfo) =>
             {
                 string text="";
@@ -144,7 +167,7 @@ namespace ModCreator
 
         public static string GetInput(string prompt, bool allowEmpty = false)
         {
-            string text = "";
+            string text;
             do
             {
                 Console.Write(prompt);
@@ -228,8 +251,19 @@ namespace ModCreator
                     parts.RemoveAt(0);
                     filePath = string.Join(Path.DirectorySeparatorChar, parts);
                 }
-                ReplaceData(newPath, modInfo, config, gameConfig);
                 Console.WriteLine($"Copied file: {filePath}");
+            }
+
+            foreach (string file in GetAllFiles(modInfo.name))
+            {
+                string filePath;
+                {
+                    List<string> parts = file.Split(Path.DirectorySeparatorChar).ToList();
+                    parts.RemoveAt(0);
+                    filePath = string.Join(Path.DirectorySeparatorChar, parts);
+                }
+                ReplaceData(file, modInfo, config, gameConfig);
+                Console.WriteLine($"Modified file: {filePath}");
             }
         }
 

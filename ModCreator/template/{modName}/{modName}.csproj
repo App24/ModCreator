@@ -45,7 +45,7 @@
     {dependancies}
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
+    {csFiles}
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
