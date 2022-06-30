@@ -1,0 +1,9 @@
+{
+    "id": "{modName}",
+    "DisplayName": "{modName}",
+    "author": "{author}",
+    "Version": "1.0.0",
+    "ManagerVersion": "0.24.0.0",
+    "AssemblyName": "{modName}.dll",
+    "EntryMethod": "{modName}.Main.Load"{requirements}
+}
