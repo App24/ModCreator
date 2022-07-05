@@ -1,5 +1,8 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using System.Diagnostics;
+using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ModCreator
 {
@@ -12,6 +15,9 @@ namespace ModCreator
 
             [Option(shortName: 'f', longName: "force", Default = false, Required = false, HelpText = "Delete previous mod if it exists")]
             public bool Force { get; set; }
+
+            [Option(shortName: 'd', longName: "description", Default = "", Required = false, HelpText = "Provide a description for the mod")]
+            public string Description { get; set; }
 
             [Usage()]
             public static IEnumerable<Example> Examples
@@ -26,8 +32,11 @@ namespace ModCreator
             }
         }
 
+        const string VERSION = "1.1.0";
+
         private static void Main(string[] args)
         {
+            Console.WriteLine($"Mod Creator Version: {VERSION}");
             if (args.Length > 0)
             {
                 if (!File.Exists(Utilities.GAME_CONFIG_FILE))
@@ -79,6 +88,7 @@ namespace ModCreator
             List<string> dependancies = new List<string>();
             ModInfo modInfo = new ModInfo();
             modInfo.name = modName;
+            modInfo.description = options.Description;
             modInfo.solutionGuid = Guid.NewGuid().ToString().ToUpper();
             modInfo.projectGuid = Guid.NewGuid().ToString().ToUpper();
             modInfo.dependancies = dependancies;

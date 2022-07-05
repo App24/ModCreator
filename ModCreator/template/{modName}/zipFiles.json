@@ -1,0 +1,9 @@
+{
+  "fileName": "mod.zip",
+  "files": [
+    "bin/Debug/{modNameDll}",
+    "bin/Release/{modNameDll}",
+    "../README.md",
+    "info.json"
+  ]
+}

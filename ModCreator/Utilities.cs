@@ -13,7 +13,10 @@ namespace ModCreator
         public const string CONFIG_FILE = "config.json";
         private static Dictionary<string, Func<ModInfo, Config, GameConfig, string>> fileReplaceables = new Dictionary<string, Func<ModInfo, Config, GameConfig, string>>()
         {
+            {"{gameName}", (_, _, gameConfig) => gameConfig.gameName },
             {"{modName}", (modInfo, _, _) => modInfo.name },
+            {"{description}", (modInfo, _, _) => modInfo.description },
+            {"{modNameDll}", (modInfo, _, _) => modInfo.name+".dll" },
             {"{solutionGuid}", (modInfo,_, _) => modInfo.solutionGuid },
             {"{projectGuid}", (modInfo,_, _) => modInfo.projectGuid },
             {"{uniqueGuid}", (_,_, _) => Guid.NewGuid().ToString().ToUpper() },
@@ -218,6 +221,7 @@ namespace ModCreator
                 }
                 Directory.Delete(name, true);
             }
+            string description = GetInput("Enter mod description: ", true);
             List<string> dependancies = new List<string>();
             while (true)
             {
@@ -227,6 +231,7 @@ namespace ModCreator
                 dependancies.Add(dependancy);
             }
             modInfo.name = name;
+            modInfo.description = description;
             modInfo.solutionGuid = Guid.NewGuid().ToString().ToUpper();
             modInfo.projectGuid = Guid.NewGuid().ToString().ToUpper();
             modInfo.dependancies = dependancies;
@@ -256,6 +261,7 @@ namespace ModCreator
 
             foreach (string file in GetAllFiles(modInfo.name))
             {
+                if (file.EndsWith(".exe")) continue;
                 string filePath;
                 {
                     List<string> parts = file.Split(Path.DirectorySeparatorChar).ToList();

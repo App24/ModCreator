@@ -22,6 +22,7 @@ namespace ModCreator
     internal struct ModInfo
     {
         public string name;
+        public string description;
         public string solutionGuid;
         public string projectGuid;
         public List<string> dependancies;
